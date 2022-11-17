@@ -1,0 +1,17 @@
+sandbox*
+priv*
+db*
+Videos*
+Downloads*
+.cache*
+.ssh*
+Pictures*
+.mozilla*
+.local/state*
+.local/share*
+.local/lib*
+.local/bin*
+.dotfiles*
+.config/google*
+.cargo*
+.*history
