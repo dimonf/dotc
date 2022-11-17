@@ -42,7 +42,7 @@ i = zoom 1
 <Shift+K> = zoom 1
 <Shift+J> = zoom -1
 o = zoom -1
-1 = zoom 100%
+1 = zoom actual
 
 # Rotate Clockwise by 90 degrees
 <Ctrl+r> = rotate by 90

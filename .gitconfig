@@ -1,0 +1,7 @@
+[user]
+	email = camel109@gmail.com
+	name = dimonf
+[core]
+	pager = less -FX
+[pull]
+	rebase = false
