@@ -1,0 +1,4 @@
+while read  line; do
+fl="$(realpath $line)"
+pacman  -Qo "$line"  2>/dev/null || echo ok: $fl
+done <<< $(dotc ls-files "$HOME")
