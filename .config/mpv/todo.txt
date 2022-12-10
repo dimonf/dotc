@@ -1,0 +1,8 @@
+searchhistory:
+  bindkey '^R' history-incremental-seaerch-backward
+
+ru language:
+setxkbmap -model pc104 -layout us,ru,gr -variant ,, -option grp:alt_space_toggle
+
+======= larbs ========
+1. progs.csv
