@@ -1,5 +1,5 @@
 export ZDOTDIR=~/.config/zsh
-export PATH="$PATH:"~/.cargo/bin
+export PATH="$PATH:"~/.cargo/bin:~/.luarocks/bin
 #stolen from Luck Smith shell profile:
 export PATH="$PATH:${$(find ~/.local/bin.my -type d -printf %p:)%%:}"
 
