@@ -10,7 +10,7 @@ Pictures*
 .local/state*
 .local/share*
 .local/lib*
-.local/bin*
+.local/bin/*
 .dotfiles*
 .config/google*
 .cargo*
