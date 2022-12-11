@@ -88,6 +88,7 @@ opts = {
     command_on_close = "",
 
     flagged_file_path = "./mpv_gallery_flagged",
+    flagged_file_path_glob = "",
 
     mouse_support = true,
     UP        = "UP",
@@ -587,6 +588,16 @@ function write_flag_file()
     out:close()
 end
 mp.register_event("shutdown", write_flag_file)
+
+function write_flag_file_glob()
+    if next(flags) == nil then return end
+    local out = io.open(opts.flagged_file_path_glob, "w")
+    for f, _ in pairs(flags) do
+        f = utils.join_path(utils.getcwd(), f)
+        out:write(f .. "\n")
+    end
+    out:close()
+end
 
 reload_config()
 
