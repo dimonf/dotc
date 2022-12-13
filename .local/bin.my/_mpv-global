@@ -1,0 +1,48 @@
+#!/usr/bin/sh
+
+#prepend absolute path if _mpv_ only argument is a dir.
+# To integrate mpv with external tools it is necessary
+# to get full path to files, while plugins such as 
+# - mpv-bookmarks-lua-script
+# - mpv-gallery-view
+# return path relative to dir where mpv run.
+DEBUG_MODE=1
+print_debug(){
+  [ $DEBUG_MODE == 1 ] && echo "$1"
+}
+
+ARG_OUT=()
+for arg in "$@"; do
+  #ignore options. they must come first. The rest, if any
+  # is a media file(s) or playlist
+    print_debug "arg: $arg; "
+  case $arg in
+    -*)
+      #inline mpv options
+      print_debug "_inline mpv option"
+      ARG_OUT+=("$arg");;
+    ./*)
+      # local file(s)
+      print_debug "_dot-dir"
+      ARG_OUT+=("${arg/./`pwd`}");;
+    .)
+      # local dir
+      print_debug "_local-dir"
+      ARG_OUT+=("`pwd`");;
+    '~')
+      #home dir expansion
+      print_debug "_home-dir"
+      ARG_OUT+=("${arg/'~'/$HOME}");;
+    /*)
+      #absolute path
+      print_debug "_absolute_path"
+      ARG_OUT+=("$arg");;
+    *)
+      #anything else
+      print_debug "_file-name-only"
+      ARG_OUT+=("`pwd`/$arg");;
+  esac
+done
+
+print_debug "${ARG_OUT[@]}"
+mpv "${ARG_OUT[@]}"

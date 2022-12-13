@@ -13,13 +13,15 @@ overlay_font = Monospace:10
 [binds]
 # Define some key bindings
 q = quit
-y = exec echo working!
+y = exec cp "$imv_current_file" ~/Videos/00/
 
 # Image navigation
 #<Left> = prev
 #<bracketleft> = prev
 #<Right> = next
 #<bracketright> = next
+p = prev
+n = next
 h = prev
 l = next
 <Shift+H> = prev 10
@@ -51,7 +53,7 @@ o = zoom -1
 x = close
 f = fullscreen
 d = overlay
-p = exec echo $imv_current_file
+#p = exec echo $imv_current_file
 c = center
 s = scaling next
 <Shift+S> = upscaling next

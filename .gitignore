@@ -15,4 +15,5 @@ Pictures*
 .config/google*
 .cargo*
 .*history
-*zcompdump
+.config/zsh/.zcompdump*
+*bookmarks.json
