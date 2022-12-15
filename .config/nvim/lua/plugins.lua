@@ -1,5 +1,6 @@
 local M = {}
 
+
 function M.setup()
   -- Indicate first time installation
   local packer_bootstrap = false
@@ -70,7 +71,7 @@ function M.setup()
     }
 
     -- Better Netrw
-    use { "tpope/vim-vinegar" }
+    use { "tpope/vim-vinegar", disable = true }
 
     -- Git
     use {
@@ -84,6 +85,7 @@ function M.setup()
     -- WhichKey
     use {
       "folke/which-key.nvim",
+      disable = false,
       event = "VimEnter",
       config = function()
         require("config.whichkey").setup()
@@ -111,6 +113,7 @@ function M.setup()
     -- Better Comment
     use {
       "numToStr/Comment.nvim",
+      disable = true,
       keys = { "gc", "gcc", "gbc" },
       config = function()
         require("Comment").setup {}
@@ -123,12 +126,13 @@ function M.setup()
     -- Motions
     use { "andymass/vim-matchup", event = "CursorMoved" }
     use { "wellle/targets.vim", event = "CursorMoved" }
-    use { "unblevable/quick-scope", event = "CursorMoved", disable = false }
-    use { "chaoren/vim-wordmotion", opt = true, fn = { "<Plug>WordMotion_w" } }
+    use { "unblevable/quick-scope", event = "CursorMoved", disable = true}
+    use { "chaoren/vim-wordmotion", opt = true, fn = { "<Plug>WordMotion_w" }, disable = true }
 
     use {
       "phaazon/hop.nvim",
       cmd = { "HopWord", "HopChar1" },
+      disable = true,
       config = function()
         require("hop").setup {}
       end,
@@ -137,6 +141,7 @@ function M.setup()
     use {
       "ggandor/lightspeed.nvim",
       keys = { "s", "S", "f", "F", "t", "T" },
+      disable = true,
       config = function()
         require("lightspeed").setup {}
       end,
@@ -161,15 +166,25 @@ function M.setup()
       end,
       wants = "nvim-web-devicons",
     }
+
+    -- replacement for nvim-gps:
+    use {
+        "SmiteshP/nvim-navic",
+        requires = "neovim/nvim-lspconfig"
+    }
+
+    --[[
     use {
       "SmiteshP/nvim-gps",
       requires = "nvim-treesitter/nvim-treesitter",
+      disable = true,
       module = "nvim-gps",
       wants = "nvim-treesitter",
       config = function()
         require("nvim-gps").setup()
       end,
     }
+    --]]
 
     -- Treesitter
     use {
@@ -209,6 +224,7 @@ function M.setup()
     -- Buffer line
     use {
       "akinsho/nvim-bufferline.lua",
+      disable = true,
       event = "BufReadPre",
       wants = "nvim-web-devicons",
       config = function()
@@ -283,6 +299,7 @@ function M.setup()
     -- Auto pairs
     use {
       "windwp/nvim-autopairs",
+      disable = true,
       wants = "nvim-treesitter",
       module = { "nvim-autopairs.completion.cmp", "nvim-autopairs" },
       config = function()
@@ -293,6 +310,7 @@ function M.setup()
     -- Auto tag
     use {
       "windwp/nvim-ts-autotag",
+      disable = true,
       wants = "nvim-treesitter",
       event = "InsertEnter",
       config = function()
@@ -303,6 +321,7 @@ function M.setup()
     -- End wise
     use {
       "RRethy/nvim-treesitter-endwise",
+      disable = true,
       wants = "nvim-treesitter",
       event = "InsertEnter",
       disable = false,
@@ -324,6 +343,17 @@ function M.setup()
       },
     }
 
+    -- last edit file
+    use {
+      'ethanholz/nvim-lastplace',
+      config = function()
+        require'nvim-lastplace'.setup {
+            lastplace_ignore_buftype = {"quickfix", "nofile", "help"},
+            lastplace_ignore_filetype = {"gitcommit", "gitrebase", "svn", "hgcommit"},
+            lastplace_open_folds = true
+      }
+      end,
+    }
     -- Bootstrap Neovim
     if packer_bootstrap then
       print "Restart Neovim required after installation!"

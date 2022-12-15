@@ -1,7 +1,8 @@
 local M = {}
 
 function M.setup()
-  local gps = require "nvim-gps"
+  --local gps = require "nvim-gps"
+  local navic = require "nvim-navic"
 
   require("lualine").setup {
     options = {
@@ -18,8 +19,10 @@ function M.setup()
       lualine_c = {
         { "filename" },
         {
-          gps.get_location,
-          cond = gps.is_available,
+          navic.get_location,
+          cond = navic.is_available,
+          --gps.get_location,
+          --cond = gps.is_available,
           color = { fg = "#f3ca28" },
         },
       },
