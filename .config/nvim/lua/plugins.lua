@@ -354,6 +354,11 @@ function M.setup()
       }
       end,
     }
+
+    use {
+      'godlygeek/tabular',
+      config = {}
+    }
     -- Bootstrap Neovim
     if packer_bootstrap then
       print "Restart Neovim required after installation!"
