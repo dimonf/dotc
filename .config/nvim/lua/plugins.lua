@@ -113,11 +113,11 @@ function M.setup()
     -- Better Comment
     use {
       "numToStr/Comment.nvim",
-      disable = true,
       keys = { "gc", "gcc", "gbc" },
       config = function()
         require("Comment").setup {}
       end,
+      disable = true,
     }
 
     -- Better surround
@@ -132,19 +132,19 @@ function M.setup()
     use {
       "phaazon/hop.nvim",
       cmd = { "HopWord", "HopChar1" },
-      disable = true,
       config = function()
         require("hop").setup {}
       end,
       disable = true,
     }
+
     use {
       "ggandor/lightspeed.nvim",
       keys = { "s", "S", "f", "F", "t", "T" },
-      disable = true,
       config = function()
         require("lightspeed").setup {}
       end,
+      disable = true,
     }
 
     -- Markdown
@@ -164,7 +164,8 @@ function M.setup()
       config = function()
         require("config.lualine").setup()
       end,
-      wants = "nvim-web-devicons",
+      --wants = "nvim-web-devicons",
+      requires = "nvim-web-devicons",
     }
 
     -- replacement for nvim-gps:
@@ -208,13 +209,15 @@ function M.setup()
     use {
       "ibhagwan/fzf-lua",
       event = "BufEnter",
-      wants = "nvim-web-devicons",
+      --wants = "nvim-web-devicons",
+      requires = "nvim-web-nvim-web-devicons",
     }
 
     -- nvim-tree
     use {
       "kyazdani42/nvim-tree.lua",
-      wants = "nvim-web-devicons",
+      --wants = "nvim-web-devicons",
+      requires = "nvim-web-devicons",
       cmd = { "NvimTreeToggle", "NvimTreeClose" },
       config = function()
         require("config.nvimtree").setup()
@@ -226,7 +229,7 @@ function M.setup()
       "akinsho/nvim-bufferline.lua",
       disable = true,
       event = "BufReadPre",
-      wants = "nvim-web-devicons",
+      --wants = "nvim-web-devicons",
       config = function()
         require("config.bufferline").setup()
       end,
@@ -264,43 +267,13 @@ function M.setup()
       disable = false,
     }
 
-    use {
-      "hrsh7th/nvim-cmp",
-      event = "InsertEnter",
-      opt = true,
-      config = function()
-        require("config.cmp").setup()
-      end,
-      wants = { "LuaSnip" },
-      requires = {
-        "hrsh7th/cmp-buffer",
-        "hrsh7th/cmp-path",
-        "hrsh7th/cmp-nvim-lua",
-        "ray-x/cmp-treesitter",
-        "hrsh7th/cmp-cmdline",
-        "saadparwaiz1/cmp_luasnip",
-        "hrsh7th/cmp-nvim-lsp",
-        -- "hrsh7th/cmp-nvim-lsp-signature-help",
-        -- "hrsh7th/cmp-calc",
-        -- "f3fora/cmp-spell",
-        -- "hrsh7th/cmp-emoji",
-        {
-          "L3MON4D3/LuaSnip",
-          wants = "friendly-snippets",
-          config = function()
-            require("config.luasnip").setup()
-          end,
-        },
-        "rafamadriz/friendly-snippets",
-      },
-      disable = true,
-    }
 
     -- Auto pairs
     use {
       "windwp/nvim-autopairs",
       disable = true,
-      wants = "nvim-treesitter",
+      -- wants = "nvim-treesitter",
+      requires = "nvim-treesitter",
       module = { "nvim-autopairs.completion.cmp", "nvim-autopairs" },
       config = function()
         require("config.autopairs").setup()
@@ -311,7 +284,8 @@ function M.setup()
     use {
       "windwp/nvim-ts-autotag",
       disable = true,
-      wants = "nvim-treesitter",
+      -- wants = "nvim-treesitter",
+      requires = "nvim-treesitter",
       event = "InsertEnter",
       config = function()
         require("nvim-ts-autotag").setup { enable = true }
@@ -321,8 +295,8 @@ function M.setup()
     -- End wise
     use {
       "RRethy/nvim-treesitter-endwise",
-      disable = true,
-      wants = "nvim-treesitter",
+      -- wants = "nvim-treesitter",
+      requires = "nvim-treesitter",
       event = "InsertEnter",
       disable = false,
     }
@@ -333,13 +307,13 @@ function M.setup()
       opt = true,
       event = "BufReadPre",
       -- wants = { "nvim-lsp-installer", "lsp_signature.nvim", "cmp-nvim-lsp" },  -- for nvim-cmp
-      wants = { "nvim-lsp-installer", "lsp_signature.nvim", "coq_nvim" },  -- for coq.nvim
+      -- wants = { "lsp_signature.nvim", "coq_nvim" },  -- for coq.nvim
       config = function()
         require("config.lsp").setup()
       end,
       requires = {
-        "williamboman/nvim-lsp-installer",
         "ray-x/lsp_signature.nvim",
+        "coq_nvim",
       },
     }
 
