@@ -210,7 +210,7 @@ function M.setup()
       "ibhagwan/fzf-lua",
       event = "BufEnter",
       --wants = "nvim-web-devicons",
-      requires = "nvim-web-nvim-web-devicons",
+      requires = "nvim-web-devicons",
     }
 
     -- nvim-tree
@@ -227,12 +227,12 @@ function M.setup()
     -- Buffer line
     use {
       "akinsho/nvim-bufferline.lua",
-      disable = true,
       event = "BufReadPre",
       --wants = "nvim-web-devicons",
       config = function()
         require("config.bufferline").setup()
       end,
+      disable = true,
     }
 
     -- User interface
@@ -248,9 +248,11 @@ function M.setup()
       end,
       disable = true,
     }
+
     use { "nvim-telescope/telescope.nvim", module = "telescope", as = "telescope" }
 
     -- Completion
+    --[[
     use {
       "ms-jpq/coq_nvim",
       branch = "coq",
@@ -264,8 +266,9 @@ function M.setup()
         { "ms-jpq/coq.artifacts", branch = "artifacts" },
         { "ms-jpq/coq.thirdparty", branch = "3p", module = "coq_3p" },
       },
-      disable = false,
+      disable = true,
     }
+    ]]
 
 
     -- Auto pairs
@@ -313,10 +316,47 @@ function M.setup()
       end,
       requires = {
         "ray-x/lsp_signature.nvim",
-        "coq_nvim",
+        "cmp-nvim-lsp",
       },
+      after = {"mason.nvim","mason-lspconfig.nvim" },
     }
 
+    use {
+      "ray-x/lsp_signature.nvim",
+    }
+
+    use { 
+      "williamboman/mason.nvim" ,
+      config = function()
+        require("config.mason").setup()
+        --require("mason").setup()
+      end,
+    }
+
+    use {
+       "williamboman/mason-lspconfig.nvim",
+       config = function()
+        require("mason-lspconfig").setup({
+          ensure_installed = {
+            "beancount",
+            "ansiblels",
+            "bashls",
+            "dockerls",
+            "sumneko_lua",
+          }
+        })
+      end,
+      after = "mason.nvim",
+    }
+
+    use 'hrsh7th/nvim-cmp' -- Autocompletion plugin
+    use {'cmp_buffer', disable = true}
+    use {'cmp-path', disable = true}
+    use 'hrsh7th/cmp-nvim-lsp' -- LSP source for nvim-cmp
+    use 'saadparwaiz1/cmp_luasnip' -- Snippets source for nvim-cmp
+    use 'L3MON4D3/LuaSnip' -- Snippets plugin
+    use 'rafamadriz/friendly-snippets'
+    
     -- last edit file
     use {
       'ethanholz/nvim-lastplace',
