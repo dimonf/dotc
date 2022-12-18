@@ -274,7 +274,7 @@ function M.setup()
     -- Auto pairs
     use {
       "windwp/nvim-autopairs",
-      disable = true,
+      disable = false,
       -- wants = "nvim-treesitter",
       requires = "nvim-treesitter",
       module = { "nvim-autopairs.completion.cmp", "nvim-autopairs" },
@@ -323,6 +323,14 @@ function M.setup()
 
     use {
       "ray-x/lsp_signature.nvim",
+      config = function()
+        require ("lsp_signature").setup({
+          bind = true,
+          handler_opts = {
+            border = "rounded",
+          },
+        })
+      end,
     }
 
     use { 
