@@ -274,7 +274,6 @@ function M.setup()
     -- Auto pairs
     use {
       "windwp/nvim-autopairs",
-      disable = false,
       -- wants = "nvim-treesitter",
       requires = "nvim-treesitter",
       module = { "nvim-autopairs.completion.cmp", "nvim-autopairs" },
@@ -309,8 +308,6 @@ function M.setup()
       "neovim/nvim-lspconfig",
       opt = true,
       event = "BufReadPre",
-      -- wants = { "nvim-lsp-installer", "lsp_signature.nvim", "cmp-nvim-lsp" },  -- for nvim-cmp
-      -- wants = { "lsp_signature.nvim", "coq_nvim" },  -- for coq.nvim
       config = function()
         require("config.lsp").setup()
       end,
@@ -320,6 +317,37 @@ function M.setup()
       },
       after = {"mason.nvim","mason-lspconfig.nvim" },
     }
+
+    use {
+       "williamboman/mason-lspconfig.nvim",
+       config = function()
+        require("mason-lspconfig").setup({
+          ensure_installed = {
+            "ansiblels",
+            "bashls",
+            "dockerls",
+            "sumneko_lua",
+          }
+        })
+      end,
+      after = "mason.nvim",
+    }
+
+    use {
+      "williamboman/mason.nvim" ,
+      config = function()
+        require("config.mason").setup()
+        --require("mason").setup()
+      end,
+    }
+
+    use 'hrsh7th/nvim-cmp' -- Autocompletion plugin
+    use {'cmp_buffer', disable = true}
+    use {'cmp-path', disable = true}
+    use 'hrsh7th/cmp-nvim-lsp' -- LSP source for nvim-cmp
+    use 'saadparwaiz1/cmp_luasnip' -- Snippets source for nvim-cmp
+    use 'L3MON4D3/LuaSnip' -- Snippets plugin
+    use 'rafamadriz/friendly-snippets'
 
     use {
       "ray-x/lsp_signature.nvim",
@@ -333,38 +361,6 @@ function M.setup()
       end,
     }
 
-    use { 
-      "williamboman/mason.nvim" ,
-      config = function()
-        require("config.mason").setup()
-        --require("mason").setup()
-      end,
-    }
-
-    use {
-       "williamboman/mason-lspconfig.nvim",
-       config = function()
-        require("mason-lspconfig").setup({
-          ensure_installed = {
-            "beancount",
-            "ansiblels",
-            "bashls",
-            "dockerls",
-            "sumneko_lua",
-          }
-        })
-      end,
-      after = "mason.nvim",
-    }
-
-    use 'hrsh7th/nvim-cmp' -- Autocompletion plugin
-    use {'cmp_buffer', disable = true}
-    use {'cmp-path', disable = true}
-    use 'hrsh7th/cmp-nvim-lsp' -- LSP source for nvim-cmp
-    use 'saadparwaiz1/cmp_luasnip' -- Snippets source for nvim-cmp
-    use 'L3MON4D3/LuaSnip' -- Snippets plugin
-    use 'rafamadriz/friendly-snippets'
-    
     -- last edit file
     use {
       'ethanholz/nvim-lastplace',
@@ -381,6 +377,12 @@ function M.setup()
       'godlygeek/tabular',
       config = {}
     }
+
+    use {
+      'nathangrigg/vim-beancount',
+      config = {}
+    }
+
     -- Bootstrap Neovim
     if packer_bootstrap then
       print "Restart Neovim required after installation!"
