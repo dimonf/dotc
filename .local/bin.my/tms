@@ -1,0 +1,62 @@
+#!/usr/bin/sh
+
+#select a database
+
+DATABASES_DIR=~/.tmsu
+SELECTED_DB=~/.local/state/tmsu_db
+
+ORIGIN_APP=`which tmsu`
+ORIGIN_ARGS=("$@")
+TRIMMED_ARGS=()
+ARG_DB="-dd" #force selection of database from the list
+
+test_db_selected() {
+  if [ -f "$SELECTED_DB" ]; then
+    db_path="$(head -n1 "$SELECTED_DB")"
+    db_fl_type=$(file "$db_path")
+    if [[ "$db_fl_type" =~ .*SQL.* ]]; then
+      return 0
+    fi
+      return 1
+  else
+    return 1
+  fi
+}
+
+select_db() {
+  PS3="please select database:"
+  select db in "$DATABASES_DIR"/*; do
+    [ "$db" ] && 
+      {
+        echo "$db" > "$SELECTED_DB"
+        break
+      } ||
+      {
+        [ -f "$SELECTED_DB" ]
+      }
+  done
+}
+
+cnt=0
+while [ $cnt -lt ${#ORIGIN_ARGS[@]} ]; do
+  arg=${ORIGIN_ARGS[$cnt]}
+  cnt=$((cnt + 1))
+  case "$arg" in
+    $ARG_DB)
+      select_db
+      #do not pass this arg to tmsu
+      continue
+      ;;
+    -D|--database)
+      #this is standard option of tmsu
+      echo ${ORIGIN_ARGS[$cnt]} > "$SELECTED_DB"
+      ;;
+  esac
+  TRIMMED_ARGS+=($arg)
+done
+
+#check if we have current db selected
+test_db_selected || select_db
+
+#printf '%s\n' "${TRIMMED_ARGS[@]}"
+tmsu --database $(head -n1 "$SELECTED_DB") "${TRIMMED_ARGS[@]}"

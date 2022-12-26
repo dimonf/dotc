@@ -1,0 +1,6 @@
+#!/usr/bin/sh
+#
+# run: tordl -c 'tordl-out %s'
+#
+OUT_FILE=~/Downloads/torr.out
+echo "$1" | tee $OUT_FILE | wl-copy
