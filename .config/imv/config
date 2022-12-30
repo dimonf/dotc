@@ -14,7 +14,7 @@ overlay_font = Monospace:10
 # Define some key bindings
 q = quit
 y = exec cp "$imv_current_file" ~/Videos/00/
-z = exec echo "$imv_current_file" > /tmp/curr_media_file
+z = exec echo "$imv_current_file" > ~/.local/state/media-curr-file
 
 # Image navigation
 #<Left> = prev
