@@ -1,5 +1,6 @@
 #!/usr/bin/sh
 
+#tagging files with TMSU. This script only 
 #select a database
 
 DATABASES_DIR=~/.tmsu
@@ -9,6 +10,8 @@ ORIGIN_APP=`which tmsu`
 ORIGIN_ARGS=("$@")
 TRIMMED_ARGS=()
 ARG_DB="-dd" #force selection of database from the list
+ARG_FILE_SELECTED="-m" #replaced with latest selection made by another app
+SELECTED_FILE=`head -n1 ~/.local/state/media-curr-file`
 
 test_db_selected() {
   if [ -f "$SELECTED_DB" ]; then
@@ -29,6 +32,7 @@ select_db() {
     [ "$db" ] && 
       {
         echo "$db" > "$SELECTED_DB"
+        echo "selected: `head -n1 $SELECTED_DB`"
         break
       } ||
       {
@@ -37,26 +41,9 @@ select_db() {
   done
 }
 
-cnt=0
-while [ $cnt -lt ${#ORIGIN_ARGS[@]} ]; do
-  arg=${ORIGIN_ARGS[$cnt]}
-  cnt=$((cnt + 1))
-  case "$arg" in
-    $ARG_DB)
-      select_db
-      #do not pass this arg to tmsu
-      continue
-      ;;
-    -D|--database)
-      #this is standard option of tmsu
-      echo ${ORIGIN_ARGS[$cnt]} > "$SELECTED_DB"
-      ;;
-  esac
-  TRIMMED_ARGS+=($arg)
-done
-
 #check if we have current db selected
-test_db_selected || select_db
+#test_db_selected || 
+select_db
 
 #printf '%s\n' "${TRIMMED_ARGS[@]}"
-tmsu --database $(head -n1 "$SELECTED_DB") "${TRIMMED_ARGS[@]}"
+#tmsu --database $(head -n1 "$SELECTED_DB") "${TRIMMED_ARGS[@]}"
