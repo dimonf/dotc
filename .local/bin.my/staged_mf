@@ -1,0 +1,5 @@
+#!/usr/bin/sh
+
+#returns path to mediafile selected from an app such as mpv or imv
+
+echo $(head -n1 ~/.local/state/media-curr-file)
